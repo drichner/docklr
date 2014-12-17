@@ -26,7 +26,7 @@ from flask_bootstrap import Bootstrap
 app = Flask(__name__, instance_relative_config=True)
 Bootstrap(app)
 app.config.from_object('config')
-app.config.from_pyfile('config.py')
+#app.config.from_pyfile('config.py')
 app.register_blueprint(simple_page,url_prefix='/pages')
 print simple_page.root_path
 
