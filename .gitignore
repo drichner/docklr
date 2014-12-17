@@ -1,3 +1,5 @@
 /instance/
+/dist/
+/Docklr.egg-info/
 *.pyc
 
