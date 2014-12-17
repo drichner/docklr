@@ -1,30 +1,40 @@
 __author__ = 'drichner'
 """
- docklr -- setup.py.py
-Copyright (C) 2014  Dan Richner
+Docklr
+------
 
-This program is free software; you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation; either version 2 of the License, or
-(at your option) any later version.
+A web front end for Docker and Fleet.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License along
-with this program; if not, write to the Free Software Foundation, Inc.,
-51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
-
-import unittest
-
-
-class MyTestCase(unittest.TestCase):
-    def test_something(self):
-        self.assertEqual(True, False)
+from setuptools import setup
 
 
-if __name__ == '__main__':
-    unittest.main()
+setup(
+    name='Docklr',
+    version='0.0.1',
+    url='https://github.com/drichner/docklr',
+    license='GPLv2',
+    author='Dan Richner',
+    author_email='drichner@candidsolution.net',
+    description='A web front end for Docker and Fleet.',
+    long_description=__doc__,
+    py_modules=['docklr'],
+    zip_safe=False,
+    include_package_data=True,
+    install_requires=[
+        'Flask >= 0.10',
+        'Flask-Bootstrap==3.3.0.1'
+    ],
+    test_suite='test_docklr.suite',
+    classifiers=[
+        'Development Status :: 2 - Pre-Alpha',
+        'Intended Audience :: Developers',
+        'Natural Language :: English',
+        'Environment :: Web Environment',
+        'Intended Audience :: Developers',
+        'Operating System :: OS Independent',
+        'Programming Language :: Python',
+        'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
+        'Topic :: Software Development :: Libraries :: Python Modules'
+    ]
+)
