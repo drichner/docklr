@@ -1,7 +1,7 @@
 Docklr
 ======
-.. image:: https://secure.travis-ci.org/drichner/Docklr.png?branch=master
-   :target: http://travis-ci.org/drichner/Docklr
+.. image:: https://travis-ci.org/drichner/docklr.svg?branch=master
+    :target: https://travis-ci.org/drichner/docklr
 
 .. image:: https://pypip.in/license/Docklr/badge.png
     :target: https://pypi.python.org/pypi/Docklr/
