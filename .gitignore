@@ -3,3 +3,4 @@
 /Docklr.egg-info/
 *.pyc
 
+/docklr.db
