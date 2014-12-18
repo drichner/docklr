@@ -1,6 +1,6 @@
 __author__ = 'drichner'
 """
- docklr -- run.py
+ docklr -- docklr.py
 Copyright (C) 2014  Dan Richner
 
 This program is free software; you can redistribute it and/or modify
@@ -17,10 +17,14 @@ You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
+import os
+from docklrapp.views import simple_page
+from flask import Flask
+from flask_bootstrap import Bootstrap
 
-
-from docklr import app
-
-if __name__ == '__main__':
-    app.run()
-
+app = Flask(__name__, instance_relative_config=True)
+Bootstrap(app)
+app.config.from_object('config')
+if os.path.exists('./instance'):
+    app.config.from_pyfile('config.py')
+app.register_blueprint(simple_page,url_prefix='/pages')
