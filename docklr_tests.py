@@ -33,7 +33,7 @@ class FlaskrTestCase(unittest.TestCase):
 
 
     def tearDown(self):
-        return # nothing to do yet
+        os.remove('docklr.db')
 
 
     def test_page(self):
