@@ -38,18 +38,38 @@
 {% block content %}
 
 <div class="container">
-
     <div class="starter-template">
-        <h1>Docklr Start Template</h1>
+        <h1>Docklr Home</h1>
 
         <p class="lead">Its not much but is a start for things to come....</p>
     </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Choose Cluster Config:</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form">
+                <div class="form-group">
+                    <select class="form-control">
+                        {% for profile in configs%}
+                        <option value="{{ profile.id }}">{{ profile.cluster_name}}</option>
+                        {% endfor %}
+                    </select>
 
-</div><!-- /.container -->
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-primary btn-xs" type="button">Add</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- /.container -->
 
 <footer class="footer">
-      <div class="container">
+    <div class="container">
         <p class="text-muted">&copy; 2014 Docklr</p>
-      </div>
+    </div>
 </footer>
 {% endblock %}

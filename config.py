@@ -20,3 +20,4 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 
 DEBUG=False
 SECRET_KEY="gschanghangizigerlifisinoegaelae"
+SQLALCHEMY_DATABASE_URI = "sqlite:///docklr.db"

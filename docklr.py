@@ -17,21 +17,9 @@ You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
-import os
 from docklrapp.views import home_page
 from etcdapp.views import etcd_page
-from flask import Flask
-from flask_bootstrap import Bootstrap
-from flask_sqlalchemy import SQLAlchemy
-
-app = Flask(__name__, instance_relative_config=True)
-Bootstrap(app)
-app.config.from_object('config')
-if os.path.exists('./instance'):
-    app.config.from_pyfile('config.py')
-
-# database stuff
-db = SQLAlchemy(app)
+from appinit import app
 
 # Resister the app modules
 

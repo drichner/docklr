@@ -1,6 +1,6 @@
 __author__ = 'drichner'
 """
- docklr -- models.py
+ docklr -- appinit.py
 Copyright (C) 2014  Dan Richner
 
 This program is free software; you can redistribute it and/or modify
@@ -17,12 +17,17 @@ You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
-from appinit import db
 
-class Config(db.Model):
+import os
+from flask import Flask
+from flask_bootstrap import Bootstrap
+from flask_sqlalchemy import SQLAlchemy
 
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+app = Flask(__name__, instance_relative_config=True)
+Bootstrap(app)
+app.config.from_object('config')
+if os.path.exists('./instance'):
+    app.config.from_pyfile('config.py')
 
-    cluster_name = db.Column(db.String(128))
-
-    cluster_etcd_locator_url = db.Column(db.String(256))
+# database stuff
+db = SQLAlchemy(app)

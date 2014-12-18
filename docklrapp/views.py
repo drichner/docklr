@@ -19,16 +19,21 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 """
 
 from flask import Blueprint, render_template, abort
+from models import Config
 from jinja2 import TemplateNotFound
 
 home_page = Blueprint('home_page', __name__,
                         template_folder='templates',
                         static_folder='static')
 
-@home_page.route('/', defaults={'page': 'index'})
-@home_page.route('/<page>')
-def show(page):
-    try:
-        return render_template('%s.html' % page)
-    except TemplateNotFound:
-        abort(404)
+
+# helpers
+def getAllConfigs():
+    return Config.query.all()
+
+# remderers
+
+@home_page.route('/')
+def index():
+
+    return render_template('index.html', configs=getAllConfigs())
