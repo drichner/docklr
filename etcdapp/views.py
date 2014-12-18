@@ -1,6 +1,6 @@
 __author__ = 'drichner'
 """
- docklr -- run.py
+ docklr -- views.py
 Copyright (C) 2014  Dan Richner
 
 This program is free software; you can redistribute it and/or modify
@@ -18,29 +18,17 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
 
+from flask import Blueprint, render_template, abort
+from jinja2 import TemplateNotFound
 
-from docklr import app
-from flask import url_for
+etcd_page = Blueprint('etcd_page', __name__,
+                      template_folder='templates',
+                        static_folder='static')
 
-def list_routes():
-    import urllib
-    output = []
-    for rule in app.url_map.iter_rules():
-
-        options = {}
-        for arg in rule.arguments:
-            options[arg] = "[{0}]".format(arg)
-
-        methods = ','.join(rule.methods)
-        url = url_for(rule.endpoint, **options)
-        line = urllib.unquote("{:50s} {:20s} {}".format(rule.endpoint, methods, url))
-        output.append(line)
-
-    for line in sorted(output):
-        print line
-with app.test_request_context():
-    list_routes()
-
-if __name__ == '__main__':
-    app.run()
-
+@etcd_page.route('/', defaults={'page': 'index'})
+@etcd_page.route('/<page>')
+def show(page):
+    try:
+        return render_template('etcd_%s.html' % page)
+    except TemplateNotFound:
+        abort(404)

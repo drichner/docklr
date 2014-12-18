@@ -18,13 +18,22 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
 import os
-from docklrapp.views import simple_page
+from docklrapp.views import home_page
+from etcdapp.views import etcd_page
 from flask import Flask
 from flask_bootstrap import Bootstrap
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__, instance_relative_config=True)
 Bootstrap(app)
 app.config.from_object('config')
 if os.path.exists('./instance'):
     app.config.from_pyfile('config.py')
-app.register_blueprint(simple_page,url_prefix='/pages')
+
+# database stuff
+db = SQLAlchemy(app)
+
+# Resister the app modules
+
+app.register_blueprint(home_page,url_prefix='/')
+app.register_blueprint(etcd_page,url_prefix='/etcd')

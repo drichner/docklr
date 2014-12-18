@@ -17,14 +17,12 @@ You should have received a copy of the GNU General Public License along
 with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
+from docklr import db
 
-import unittest
+class Config(db.Model):
 
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
-class MyTestCase(unittest.TestCase):
-    def test_something(self):
-        self.assertEqual(True, False)
+    cluster_name = db.Column(db.String(128))
 
-
-if __name__ == '__main__':
-    unittest.main()
+    cluster_etcd_locator_url = db.Column(db.String(256))

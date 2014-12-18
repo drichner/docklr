@@ -1,6 +1,6 @@
 __author__ = 'drichner'
 """
- docklr -- run.py
+ docklr -- models.py
 Copyright (C) 2014  Dan Richner
 
 This program is free software; you can redistribute it and/or modify
@@ -18,29 +18,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
 
+import unittest
 
-from docklr import app
-from flask import url_for
 
-def list_routes():
-    import urllib
-    output = []
-    for rule in app.url_map.iter_rules():
+class MyTestCase(unittest.TestCase):
+    def test_something(self):
+        self.assertEqual(True, False)
 
-        options = {}
-        for arg in rule.arguments:
-            options[arg] = "[{0}]".format(arg)
-
-        methods = ','.join(rule.methods)
-        url = url_for(rule.endpoint, **options)
-        line = urllib.unquote("{:50s} {:20s} {}".format(rule.endpoint, methods, url))
-        output.append(line)
-
-    for line in sorted(output):
-        print line
-with app.test_request_context():
-    list_routes()
 
 if __name__ == '__main__':
-    app.run()
-
+    unittest.main()
