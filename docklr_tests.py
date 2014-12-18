@@ -21,21 +21,40 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 import os
 import run as docklr
 import unittest
-import tempfile
+from appinit import db
+from docklrapp.models import Config
 
 class FlaskrTestCase(unittest.TestCase):
 
     def setUp(self):
-         docklr.app.config['TESTING'] = True
-         self.app = docklr.app.test_client()
+        docklr.app.config['TESTING'] = True
+        db.create_all()
+        self.app = docklr.app.test_client()
 
 
     def tearDown(self):
         return # nothing to do yet
 
+
     def test_page(self):
-        rv = self.app.get('/pages/')
-        assert 'Docklr Start Template' in rv.data
+        rv = self.app.get('/')
+        assert 'Docklr Home' in rv.data
+
+    def test_etcd(self):
+            rv = self.app.get('/etcd/')
+            assert 'etcd Start' in rv.data
+
+    def test_add_config(self):
+        config = Config()
+        config.cluster_name = "Test Cluster"
+        config.cluster_etcd_locator_url = "https://discovery.etcd.io/50347750807fcec810d21b67e6b63c88/"
+        db.session.add(config)
+        db.session.commit()
+        assert len(Config.query.all()) == 1
+        rv = self.app.get('/')
+        assert 'Test Cluster' in rv.data
+
+
 
 if __name__ == '__main__':
     unittest.main()
