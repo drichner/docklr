@@ -67,10 +67,19 @@
             </div>
 
         </div>
-        <div id="test"/>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Current cluster config:</h3>
+            </div>
+            <div class="panel-body">
+                <div id="test"></div>
+            </div>
+
+        </div>
+
 
     </div>
-    {% include "frm-addconfig.html" %}
+
     <!-- /.container -->
 
     <footer class="footer">
@@ -78,6 +87,7 @@
             <p class="text-muted">&copy; 2014 Docklr</p>
         </div>
     </footer>
+    {% include "frm-addconfig.html" %}
 {% endblock %}
 
 {% block scripts %}
@@ -107,7 +117,7 @@
         $("#cluster-select").change(function () {
             var url = "clusterinfo/" + $("#cluster-select").val();
             $.getJSON(url, function (data) {
-                var elem =  JSON.stringify(data) 
+                var elem = JSON.stringify(data)
                 $("#test").text(elem)
             });
         })
