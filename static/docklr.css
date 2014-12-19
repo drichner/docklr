@@ -33,3 +33,18 @@ body {
   padding-right: 15px;
   padding-left: 15px;
 }
+
+.node-up {
+  background-image: url('node-up.png');
+  width: 196px;
+  height: 228px;
+}
+
+.node {
+  alignment: center;
+}
+
+.thumbnail {
+  	border: 1px ridge;
+    border-radius: 12px;
+}
