@@ -26,14 +26,16 @@ from docklrapp.models import Config
 
 class FlaskrTestCase(unittest.TestCase):
 
+
     def setUp(self):
         docklr.app.config['TESTING'] = True
+        docklr.app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///docklr-test.db"
         db.create_all()
         self.app = docklr.app.test_client()
 
 
     def tearDown(self):
-        os.remove('docklr.db')
+        os.remove('docklr-test.db')
 
 
     def test_page(self):
@@ -41,19 +43,39 @@ class FlaskrTestCase(unittest.TestCase):
         assert 'Docklr Home' in rv.data
 
     def test_etcd(self):
-            rv = self.app.get('/etcd/')
-            assert 'etcd Start' in rv.data
+        rv = self.app.get('/etcd/')
+        assert 'etcd Start' in rv.data
 
     def test_add_config(self):
         config = Config()
         config.cluster_name = "Test Cluster"
-        config.cluster_etcd_locator_url = "https://discovery.etcd.io/50347750807fcec810d21b67e6b63c88/"
+        config.cluster_etcd_locator_url = "https://discovery.etcd.io/50347750807ecec710d21b67e6b63c88"
         db.session.add(config)
         db.session.commit()
         assert len(Config.query.all()) == 1
         rv = self.app.get('/')
         assert 'Test Cluster' in rv.data
 
+
+
+    def test_get_config(self):
+        testconfig = self.getConfigRecord()
+        rv = self.app.get('/clusterinfo/%s' % testconfig.id)
+
+
+
+# helper methods
+
+    def getConfigRecord(self):
+        testconfig = Config.query.first()
+        if not testconfig:
+            config = Config()
+            config.cluster_name = "Test Cluster"
+            config.cluster_etcd_locator_url = "https://discovery.etcd.io/50347750807ecec710d21b67e6b63c88"
+            db.session.add(config)
+            db.session.commit()
+            return self.getConfigRecord()
+        return testconfig
 
 
 if __name__ == '__main__':

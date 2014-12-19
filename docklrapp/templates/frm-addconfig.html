@@ -1,0 +1,24 @@
+{% import "bootstrap/wtf.html" as wtf %}
+<div class="modal fade" id="basicModal" tabindex="-1" role="dialog" aria-labelledby="basicModal"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</span><span class="sr-only">Close</span></button></button>
+                <h4 class="modal-title" id="myModalLabel">Add new Cluster Config</h4>
+            </div>
+            <div class="modal-body">
+                <h4>Please enter Cluster information</h4>
+                {{ wtf.quick_form(form,id="clusterinfo",action="/clusterconfig",method="post") }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button id ="frm-cluster-submit-btn" type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block formscripts %}
+
+{% endblock %}
