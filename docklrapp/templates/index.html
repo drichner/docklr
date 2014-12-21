@@ -78,100 +78,11 @@
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Cluster:</h3>
+                <h3 class="panel-title" name="cluster">Cluster:</h3>
             </div>
             <div class="panel-body">
                 <div class="well">
-                    <div class="container-fluid">
-                        <div class="row">
-
-                            <div class="col-sm-1 col-md-3">
-                                <div class="thumbnail d-node">
-                                    <img class="node" src="{{ url_for('static',filename='node-up-xsm.png') }}"
-                                         alt="...">
-
-                                    <div class="caption">
-                                        <h3>Node Up</h3>
-
-                                        <p>...</p>
-
-                                        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#"
-                                                                                                           class="btn btn-default"
-                                                                                                           role="button">Button</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-1 col-md-3">
-                                <div class="thumbnail d-node">
-                                    <img class="node" src="{{ url_for('static',filename='node-down-xsm.png') }}"
-                                         alt="...">
-
-                                    <div class="caption">
-                                        <h3>Node Down</h3>
-
-                                        <p>...</p>
-
-                                        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#"
-                                                                                                           class="btn btn-default"
-                                                                                                           role="button">Button</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-1 col-md-3">
-                                <div class="thumbnail d-node">
-                                    <img class="node" src="{{ url_for('static',filename='node-master-xsm.png') }}"
-                                         alt="...">
-
-                                    <div class="caption">
-                                        <h3>Node Master</h3>
-
-                                        <p>...</p>
-
-                                        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#"
-                                                                                                           class="btn btn-default"
-                                                                                                           role="button">Button</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-1 col-md-3">
-                                <div class="thumbnail d-node">
-                                    <img class="node" src="{{ url_for('static',filename='node-down-xsm.png') }}"
-                                         alt="...">
-
-                                    <div class="caption">
-                                        <h3>Node Down</h3>
-
-                                        <p>...</p>
-
-                                        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#"
-                                                                                                           class="btn btn-default"
-                                                                                                           role="button">Button</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-1 col-md-3">
-                                <div class="thumbnail d-node">
-                                    <img class="node" src="{{ url_for('static',filename='node-down-xsm.png') }}"
-                                         alt="...">
-
-                                    <div class="caption">
-                                        <h3>Node Down</h3>
-
-                                        <p>...</p>
-
-                                        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#"
-                                                                                                           class="btn btn-default"
-                                                                                                           role="button">Button</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <div id="clusterlayout"></div>
                 </div>
             </div>
 
@@ -216,9 +127,25 @@
         });
         $("#cluster-select").change(function () {
             var url = "clusterinfo/" + $("#cluster-select").val();
+            var clurl = 'clusterlayout/' + $("#cluster-select").val();
             $.getJSON(url, function (data) {
                 var elem = JSON.stringify(data)
                 $("#test").text(elem)
+            });
+            $("#clusterlayout").load(clurl);
+
+        });
+        $(document).on('click', ".dr-remove-node", function (event) {
+            var n = $(this).attr("node");
+            var url = "removenode/" + n
+            $.get(url, function (data) {
+                var clurl = 'clusterlayout/' + $("#cluster-select").val();
+                $.getJSON(url, function (data) {
+                    var elem = JSON.stringify(data)
+                    $("#test").text(elem)
+                });
+                $("#clusterlayout").load(clurl);
+                alert("Remove was performed.");
             });
         })
 

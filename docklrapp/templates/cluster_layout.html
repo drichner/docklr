@@ -1,0 +1,25 @@
+<div class="container-fluid">
+    <div class="row">
+        {% for host in hosts %}
+            <div class="col-sm-1 col-md-3">
+
+                <div class="thumbnail d-node">
+                    <img class="node" src="{{ url_for('static',filename='node-'+host['status']+'-xsm.png') }}"
+                         alt="...">
+
+                    <div class="caption">
+                        <h3>{{ host['name'] }}</h3>
+
+                        <p>...</p>
+
+                        <p><a href="#" class="btn btn-primary btn-xs" role="button">Button</a> {% if host.status == "down" %}<a href="#cluster" node="{{ host.durl }}"
+                                                                                           class="btn btn-default btn-xs btn-danger dr-remove-node"
+                                                                                           role="button">Remove from cluster</a> {% endif %}
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        {% endfor %}
+    </div>
+</div>
