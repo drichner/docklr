@@ -1,50 +1,80 @@
 /* Sticky footer styles
 -------------------------------------------------- */
 html {
-  position: relative;
-  min-height: 100%;
-}
-body {
-  /* Margin bottom by footer height */
-  margin-bottom: 60px;
-}
-.footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  /* Set the fixed height of the footer here */
-  height: 60px;
-  background-color: #f5f5f5;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  padding-top: 50px;
+    /* Margin bottom by footer height */
+    margin-bottom: 60px;
 }
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 60px;
+    background-color: #f5f5f5;
+}
+
+body {
+    padding-top: 50px;
+}
+
 .starter-template {
-  padding: 40px 15px;
-  text-align: center;
+    padding: 40px 15px;
+    text-align: center;
 }
 
 .container .text-muted {
-  margin: 20px 0;
+    margin: 20px 0;
 }
 
 .footer > .container {
-  padding-right: 15px;
-  padding-left: 15px;
+    padding-right: 15px;
+    padding-left: 15px;
 }
 
 .node-up {
-  background-image: url('node-up.png');
-  width: 196px;
-  height: 228px;
+    background-image: url('node-up.png');
+    width: 196px;
+    height: 228px;
 }
 
 .node {
-  alignment: center;
+    alignment: center;
 }
 
 .thumbnail {
-  	border: 1px ridge;
+    border: 1px ridge;
     border-radius: 12px;
+}
+
+.right {
+    float: right;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1;
+    color: #000;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=50);
+    opacity: .5
+}
+
+.right:hover, .right:focus {
+    color: darkgreen;
+    text-decoration: none;
+    cursor: pointer;
+    filter: alpha(opacity=50);
+    opacity: .5
+}
+
+button.right {
+    -webkit-appearance: none;
+    padding: 0;
+    cursor: pointer;
+    background: 0 0;
+    border: 0
 }
