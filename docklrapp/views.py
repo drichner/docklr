@@ -70,24 +70,30 @@ def get_cluster_layout(id):
     r = requests.get(conf.cluster_etcd_locator_url)
     cluster_info = json.loads(r.text)
     hosts = []
-    for node in cluster_info['node']['nodes']:
-        host = {}
-        u = urlparse(node['value'])
-        host['name']=u.hostname
-        host['status']='down'
-        print u.hostname
-        print u.port
-        status = ping(u.hostname)
-        host['durl']=node['key'].replace('/_etcd/registry/','')
-        if status:
-            host['status']='up'
-            #check if node is master
-            client = etcd.Client(host=u.hostname,port=4001)
-            t = client.leader
-            if urlparse(t).hostname == u.hostname:
-                host['status']='master'
+    try:
+        for node in cluster_info['node']['nodes']:
+            host = {}
+            u = urlparse(node['value'])
+            host['name']=u.hostname
+            host['status']='down'
+            print u.hostname
+            print u.port
+            status = ping(u.hostname)
+            host['durl']=node['key'].replace('/_etcd/registry/','')
+            if status:
+                host['status']='up'
+                #check if node is master
+                client = etcd.Client(host=u.hostname,port=4001)
+                try:
+                    t = client.leader
+                    if urlparse(t).hostname == u.hostname:
+                        host['status']='master'
+                except Exception:
+                    pass
 
-        hosts.append(host)
+            hosts.append(host)
+    except KeyError:
+        pass
     return render_template('cluster_layout.html', hosts=hosts)
 
 
