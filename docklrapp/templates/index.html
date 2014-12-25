@@ -69,20 +69,12 @@
             </div>
 
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Current cluster config:</h3>
-            </div>
-            <div class="panel-body">
-                <div id="test"></div>
-            </div>
 
-        </div>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <button type="button" id="cluster-detail" class="right" aria-hidden="true"><span
+                <button type="button" id="cluster-detail" class="right" aria-hidden="true" data-toggle="tooltip" data-original-title="Display Discovery Data"><span
                         class="icon-node-detail" aria-hidden="true"></span></button>
-                <button type="button" id="cluster-refresh" class="right" aria-hidden="true"><span
+                <button type="button" id="cluster-refresh" class="right" aria-hidden="true" data-toggle="tooltip" data-original-title="Refresh"><span
                         class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button>
                 <h3 class="panel-title" name="cluster">Cluster:</h3>
             </div>
@@ -105,6 +97,7 @@
         </div>
     </footer>
     {% include "frm-addconfig.html" %}
+    {% include "ft_clusterconfig.html" %}
 {% endblock %}
 
 {% block scripts %}
@@ -114,20 +107,34 @@
             "backdrop": "false"
         };
 
-        function loadClusterInfo() {
+        function loadDiscoveryInfo() {
             var url = "clusterinfo/" + $("#cluster-select").val();
-            var clurl = 'clusterlayout/' + $("#cluster-select").val();
             $.getJSON(url, function (data) {
-                var elem = JSON.stringify(data)
-                $("#test").text(elem)
+                // var obj = JSON.parse(data)
+                var jsonPretty = JSON.stringify(data, null, '\t');
+                $("#raw-cluster-config").text(jsonPretty)
             });
+        }
+        ;
+
+        function loadClusterInfo() {
+            var clurl = 'clusterlayout/' + $("#cluster-select").val();
             $("#clusterlayout").load(clurl);
 
         }
+        ;
 
         $(document).ready(function () {
+            loadClusterInfo()
+            $('[data-toggle="tooltip"]').tooltip({
+                placement: 'top'
+            });
             $("#add-config-btn").click(function (event) {
                 $('#basicModal').modal(options);
+            });
+            $("#cluster-detail").click(function (event) {
+                loadDiscoveryInfo();
+                $('#raw-cluster-configModal').modal(options);
             });
             $('#frm-cluster-submit-btn').click(function () {
                 $.ajax({
@@ -145,7 +152,7 @@
         $("#cluster-select").change(function () {
             loadClusterInfo()
         });
-        $("#cluster-refresh").click(function() {
+        $("#cluster-refresh").click(function () {
             loadClusterInfo()
         });
         $(document).on('click', ".dr-remove-node", function (event) {

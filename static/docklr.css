@@ -52,6 +52,10 @@ body {
     border-radius: 12px;
 }
 
+.wide-modal {
+    width: 60%;
+}
+
 .right {
     float: right;
     font-size: 21px;
