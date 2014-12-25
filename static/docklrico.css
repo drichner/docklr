@@ -1,22 +1,22 @@
 /*
-  Icon Font: docklr
+  Icon Font: docklrico
 */
 
 @font-face {
-  font-family: "docklr";
-  src: url("./docklr.eot");
-  src: url("./docklr.eot?#iefix") format("embedded-opentype"),
-       url("./docklr.woff") format("woff"),
-       url("./docklr.ttf") format("truetype"),
-       url("./docklr.svg#docklr") format("svg");
+  font-family: "docklrico";
+  src: url("./docklrico.eot");
+  src: url("./docklrico.eot?#iefix") format("embedded-opentype"),
+       url("./docklrico.woff") format("woff"),
+       url("./docklrico.ttf") format("truetype"),
+       url("./docklrico.svg#docklrico") format("svg");
   font-weight: normal;
   font-style: normal;
 }
 
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
-    font-family: "docklr";
-    src: url("./docklr.svg#docklr") format("svg");
+    font-family: "docklrico";
+    src: url("./docklrico.svg#docklrico") format("svg");
   }
 }
 
@@ -29,7 +29,7 @@
 .icon-node-detail:before,
 .icon-nodes:before {
   display: inline-block;
-  font-family: "docklr";
+  font-family: "docklrico";
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
