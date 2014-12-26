@@ -20,7 +20,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 import os
 from flask import Blueprint, render_template, request
 from models import Config
-from forms import MyForm
+from forms import AddConfig, NewConfig
 from appinit import db
 from urlparse import urlparse
 from common.DiscoveryClient import DiscoveryClient
@@ -30,32 +30,33 @@ import requests
 from jinja2 import TemplateNotFound
 
 home_page = Blueprint('home_page', __name__,
-                        template_folder='templates',
-                        static_folder='static')
+                      template_folder='templates',
+                      static_folder='static')
 
 
 # helpers
 def getAllConfigs():
     return Config.query.all()
 
+
 def ping(host):
-
-
     hostname = host
     response = os.system("ping -c 1 -t 1 " + hostname)
 
-    #and then check the response...
+    # and then check the response...
     if response == 0:
         return True
     else:
         return False
 
+
 # remderers
 
 @home_page.route('/')
 def index():
-    mform = MyForm()
-    return render_template('index.html', configs=getAllConfigs(),form=mform)
+    mform = AddConfig()
+    newconfigfrm = NewConfig()
+    return render_template('index.html', configs=getAllConfigs(), addconfigform=mform, newconfigform=newconfigfrm)
 
 
 @home_page.route('clusterinfo/<id>')
@@ -63,6 +64,7 @@ def get_cluster_info(id):
     conf = Config.query.get(id)
     r = requests.get(conf.cluster_etcd_locator_url)
     return r.text
+
 
 @home_page.route('clusterlayout/<id>')
 def get_cluster_layout(id):
@@ -74,20 +76,20 @@ def get_cluster_layout(id):
         for node in cluster_info['node']['nodes']:
             host = {}
             u = urlparse(node['value'])
-            host['name']=u.hostname
-            host['status']='down'
+            host['name'] = u.hostname
+            host['status'] = 'down'
             print u.hostname
             print u.port
             status = ping(u.hostname)
-            host['durl']=node['key'].replace('/_etcd/registry/','')
+            host['durl'] = node['key'].replace('/_etcd/registry/', '')
             if status:
-                host['status']='up'
-                #check if node is master
-                client = etcd.Client(host=u.hostname,port=4001)
+                host['status'] = 'up'
+                # check if node is master
+                client = etcd.Client(host=u.hostname, port=4001)
                 try:
                     t = client.leader
                     if urlparse(t).hostname == u.hostname:
-                        host['status']='master'
+                        host['status'] = 'master'
                 except Exception:
                     pass
 
@@ -97,28 +99,39 @@ def get_cluster_layout(id):
     return render_template('cluster_layout.html', hosts=hosts)
 
 
-
-
-
-
-
-
-@home_page.route('clusterconfig', methods=['GET', 'POST'])
-def login():
+@home_page.route('addclusterconfig', methods=['GET', 'POST'])
+def addclusterconfig():
     print request
     if request.method == 'POST':
-        #save a new config
-        nc=Config()
+        # save a new config
+        nc = Config()
         nc.cluster_name = request.form['cluster_name']
         nc.cluster_etcd_locator_url = request.form['cluster_etcd_locator_url']
         db.session.add(nc)
         db.session.commit()
-        return json.dumps({'status':'OK'});
+        return json.dumps({'status': 'OK', 'cluster': {'id': nc.id, 'cluster_name': nc.cluster_name,
+                                                       'cluster_etcd_locator_url': nc.cluster_etcd_locator_url}})
     else:
         print request
 
+
+@home_page.route('newclusterconfig', methods=['GET', 'POST'])
+def newclusterconfig():
+    print request
+    if request.method == 'POST':
+        # save a new config
+        nc = Config()
+        nc.cluster_name = request.form['cluster_name']
+        nc.cluster_etcd_locator_url = request.form['cluster_etcd_locator_url']
+        db.session.add(nc)
+        db.session.commit()
+        return json.dumps({'status': 'OK'});
+    else:
+        print request
+
+
 @home_page.route('removenode/<path:ident>')
 def removenode(ident):
-    client = DiscoveryClient(host="discovery.etcd.io",port=443,protocol='https')
-    client.delete("/"+ident)
-    return json.dumps({'status':'OK'});
+    client = DiscoveryClient(host="discovery.etcd.io", port=443, protocol='https')
+    client.delete("/" + ident)
+    return json.dumps({'status': 'OK'});

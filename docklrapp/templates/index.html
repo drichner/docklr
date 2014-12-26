@@ -46,6 +46,8 @@
 
             <p class="lead">Its not much but is a start for things to come....</p>
         </div>
+        <!--Cluster selection and config generation-->
+
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">Choose Cluster Config:</h3>
@@ -63,18 +65,24 @@
                     <div class="form-group">
                         <a href="#" class="btn btn-xs btn-primary"
                            data-toggle="modal"
-                           data-target="#basicModal">Add Cluster Config</a>
+                           data-target="#AddConfigModal">Add Cluster Config</a>
+                        <a href="#" class="btn btn-xs btn-primary"
+                           data-toggle="modal"
+                           data-target="#NewDiscoveryModal">Create new Discovery Record</a>
                     </div>
                 </div>
             </div>
 
         </div>
+        <!--Cluster Display -->
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <button type="button" id="cluster-detail" class="right" aria-hidden="true" data-toggle="tooltip" data-original-title="Display Discovery Data"><span
+                <button type="button" id="cluster-detail" class="right" aria-hidden="true" data-toggle="tooltip"
+                        data-original-title="Display Discovery Data"><span
                         class="icon-node-detail" aria-hidden="true"></span></button>
-                <button type="button" id="cluster-refresh" class="right" aria-hidden="true" data-toggle="tooltip" data-original-title="Refresh"><span
+                <button type="button" id="cluster-refresh" class="right" aria-hidden="true" data-toggle="tooltip"
+                        data-original-title="Refresh"><span
                         class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button>
                 <h3 class="panel-title" name="cluster">Cluster:</h3>
             </div>
@@ -96,6 +104,8 @@
             <p class="text-muted">&copy; 2014 Docklr</p>
         </div>
     </footer>
+    <!--Modal dialogs-->
+
     {% include "frm-addconfig.html" %}
     {% include "ft_clusterconfig.html" %}
 {% endblock %}
@@ -130,20 +140,21 @@
                 placement: 'top'
             });
             $("#add-config-btn").click(function (event) {
-                $('#basicModal').modal(options);
+                $('#NewDiscoveryModal').modal(options);
             });
             $("#cluster-detail").click(function (event) {
                 loadDiscoveryInfo();
                 $('#raw-cluster-configModal').modal(options);
             });
-            $('#frm-cluster-submit-btn').click(function () {
+            $('#frm-addcluster-submit-btn').click(function () {
                 $.ajax({
-                    url: '/clusterconfig',
+                    url: '/addclusterconfig',
                     type: 'post',
                     dataType: 'json',
                     data: $('#clusterinfo').serialize(),
                     success: function (data) {
-
+                        $('#cluster-select').append($('<option/>').attr("value", data.cluster.id).text(data.cluster.cluster_name))
+                        $('#AddConfigModal').modal('toggle');
                     }
                 });
             });
