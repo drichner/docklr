@@ -118,16 +118,24 @@ def addclusterconfig():
 @home_page.route('newclusterconfig', methods=['GET', 'POST'])
 def newclusterconfig():
     print request
+    tokenUrl = "https://discovery.etcd.io/new"
     if request.method == 'POST':
         # save a new config
         nc = Config()
         nc.cluster_name = request.form['cluster_name']
-        nc.cluster_etcd_locator_url = request.form['cluster_etcd_locator_url']
-        db.session.add(nc)
-        db.session.commit()
-        return json.dumps({'status': 'OK'});
+        try:
+            # create the new token
+            r = requests.get(tokenUrl)
+            cluster_etcd_locator_url = r.text
+            nc.cluster_etcd_locator_url = cluster_etcd_locator_url
+            db.session.add(nc)
+            db.session.commit()
+        except Exception:
+            pass
+        return json.dumps({'status': 'OK','cluster': {'id': nc.id, 'cluster_name': nc.cluster_name,
+                                                       'cluster_etcd_locator_url': nc.cluster_etcd_locator_url}})
     else:
-        print request
+        return json.dumps({'status': 'Fail'})
 
 
 @home_page.route('removenode/<path:ident>')

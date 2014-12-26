@@ -157,27 +157,39 @@
                     }
                 });
             });
-            {% block formscripts %} {% endblock %}
-        });
-        $("#cluster-select").change(function () {
-            loadClusterInfo()
-        });
-        $("#cluster-refresh").click(function () {
-            loadClusterInfo()
-        });
-        $(document).on('click', ".dr-remove-node", function (event) {
-            var n = $(this).attr("node");
-            var url = "removenode/" + n
-            $.get(url, function (data) {
-                var clurl = 'clusterlayout/' + $("#cluster-select").val();
-                $.getJSON(url, function (data) {
-                    var elem = JSON.stringify(data)
-                    $("#test").text(elem)
+            $('#frm-newcluster-submit-btn').click(function () {
+                $.ajax({
+                    url: '/newclusterconfig',
+                    type: 'post',
+                    dataType: 'json',
+                    data: $('#newclusterconfig').serialize(),
+                    success: function (data) {
+                        $('#cluster-select').append($('<option/>').attr("value", data.cluster.id).text(data.cluster.cluster_name))
+                        $('#NewDiscoveryModal').modal('toggle');
+                    }
                 });
-                $("#clusterlayout").load(clurl);
-                alert("Remove was performed.");
             });
-        })
+
+            $("#cluster-select").change(function () {
+                loadClusterInfo()
+            });
+            $("#cluster-refresh").click(function () {
+                loadClusterInfo()
+            });
+            $(document).on('click', ".dr-remove-node", function (event) {
+                var n = $(this).attr("node");
+                var url = "removenode/" + n
+                $.get(url, function (data) {
+                    var clurl = 'clusterlayout/' + $("#cluster-select").val();
+                    $.getJSON(url, function (data) {
+                        var elem = JSON.stringify(data)
+                        $("#test").text(elem)
+                    });
+                    $("#clusterlayout").load(clurl);
+                    alert("Remove was performed.");
+                });
+            })
+        });
 
     </script>
 {% endblock %}
