@@ -1,5 +1,5 @@
 {% import "bootstrap/wtf.html" as wtf %}
-<div class="modal fade" id="NewDiscoveryModal" tabindex="-1" role="dialog" aria-labelledby="basicModal"
+<div class="modal fade" id="NewDiscoveryModal" tabindex="-1" role="dialog" aria-labelledby="NewDiscoveryModal"
      aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -9,11 +9,12 @@
             </div>
             <div class="modal-body">
                 <h4>Please enter Cluster information</h4>
-                {{ wtf.quick_form(newclusterform,id="newclusteconfig",action="/newclusterconfig",method="post") }}
+                {{ wtf.quick_form(newconfigform,id="newclusterconfig",action="/newclusterconfig",method="post") }}
+                <p><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span> <small>By submitting this form you create a new token record on <strong>https://discovery.etcd.io</strong></small></p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button id ="frm-cluster-submit-btn" type="button" class="btn btn-primary">Create New Config</button>
+                <button id ="frm-newcluster-submit-btn" type="button" class="btn btn-primary">Create New Config</button>
             </div>
         </div>
     </div>

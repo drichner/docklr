@@ -107,6 +107,7 @@
     <!--Modal dialogs-->
 
     {% include "frm-addconfig.html" %}
+    {% include "frm-newconfig.html" %}
     {% include "ft_clusterconfig.html" %}
 {% endblock %}
 
@@ -139,9 +140,7 @@
             $('[data-toggle="tooltip"]').tooltip({
                 placement: 'top'
             });
-            $("#add-config-btn").click(function (event) {
-                $('#NewDiscoveryModal').modal(options);
-            });
+
             $("#cluster-detail").click(function (event) {
                 loadDiscoveryInfo();
                 $('#raw-cluster-configModal').modal(options);
