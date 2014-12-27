@@ -26,3 +26,5 @@ class Config(db.Model):
     cluster_name = db.Column(db.String(128))
 
     cluster_etcd_locator_url = db.Column(db.String(256))
+
+    private_key = db.Column(db.Text(1100))

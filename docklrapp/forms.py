@@ -19,12 +19,13 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 """
 
 from flask_wtf import Form
-from wtforms import StringField
+from wtforms import StringField,TextAreaField
 from wtforms.validators import DataRequired
 
 class AddConfig(Form):
     cluster_name = StringField('Config Name', validators=[DataRequired()])
     cluster_etcd_locator_url = StringField('Config URL',  validators=[DataRequired()])
+    primary_key = TextAreaField('Private Key')
 
 class NewConfig(Form):
     cluster_name = StringField('Config Name', validators=[DataRequired()])

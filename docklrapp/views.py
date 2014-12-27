@@ -107,6 +107,7 @@ def addclusterconfig():
         nc = Config()
         nc.cluster_name = request.form['cluster_name']
         nc.cluster_etcd_locator_url = request.form['cluster_etcd_locator_url']
+        nc.private_key = request.form['primary_key']
         db.session.add(nc)
         db.session.commit()
         return json.dumps({'status': 'OK', 'cluster': {'id': nc.id, 'cluster_name': nc.cluster_name,
