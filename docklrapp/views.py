@@ -160,13 +160,40 @@ def removenode(ident):
 
 # CRUD Test
 @home_page.route('frm/config', methods=['GET', 'POST'])
-@home_page.route('frm/config/<id>', methods=['GET', 'PUT'])
+@home_page.route('frm/config/<id>', methods=['GET', 'POST'])
 def config(id=None):
     print id
-    form = ConfigForm()
-    if request.method == 'GET' and id == None:
+    action='/frm/config'
+    if request.method == 'GET' and not id:
         # just get the new form for adding
-        action='frm//config'
+        form = ConfigForm()
         method='POST'
         template_name='frm-config.html'
-        return render_template(template_name, form=form, action=action,method=method)
+        return render_template(template_name, form=form, action=action,method=method,id=id)
+    if request.method == 'GET' and id:
+        # get the config
+        conf = Config.query.get(id)
+        form = ConfigForm()
+        form.process(obj=conf)
+        action+="/%s" % id
+        method='POST'
+        template_name='frm-config.html'
+        return render_template(template_name, form=form, action=action,method=method,id=id)
+    if request.method == 'POST' and not id:
+        # new record
+        conf=Config()
+        form = ConfigForm(request.form)
+        form.populate_obj(conf)
+        db.session.add(conf)
+        db.session.commit()
+        return json.dumps({'status': 'OK','cluster': conf.dict})
+
+    if request.method == 'POST' and id:
+        conf=Config.query.get(id)
+        form = ConfigForm(request.form)
+        form.populate_obj(conf)
+        db.session.add(conf)
+        db.session.commit()
+        return json.dumps({'status': 'OK','cluster': conf.dict})
+
+

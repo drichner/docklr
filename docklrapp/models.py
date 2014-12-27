@@ -18,6 +18,8 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 """
 from appinit import db
+import json
+
 
 class Config(db.Model):
 
@@ -28,3 +30,7 @@ class Config(db.Model):
     cluster_etcd_locator_url = db.Column(db.String(256))
 
     private_key = db.Column(db.Text(1100))
+
+    @property
+    def dict(self):
+        return {'id':self.id,'cluster_name':self.cluster_name,'cluster_etcd_locator_url':self.cluster_etcd_locator_url}
