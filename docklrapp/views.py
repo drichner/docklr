@@ -98,6 +98,18 @@ def get_cluster_layout(id):
         pass
     return render_template('cluster_layout.html', hosts=hosts)
 
+@home_page.route('clusterconfig/<id>', methods=['GET', 'PUT','DELETE'])
+def clusterconfig(id):
+    conf = Config.query.get(id)
+    if request.method == 'PUT':
+        conf.cluster_etcd_locator_url = request.form['cluster_etcd_locator_url']
+        conf.cluster_name = request.form['cluster_name']
+        conf.private_key = request.form['private_key']
+        db.session.add(conf)
+        db.session.commit()
+        return json.dumps({'status': 'OK', 'cluster': {'id': conf.id, 'cluster_name': conf.cluster_name,
+                                                       'cluster_etcd_locator_url': conf.cluster_etcd_locator_url}})
+    return json.dumps({'status': 'Failure', 'message': 'Method not supported'})
 
 @home_page.route('addclusterconfig', methods=['GET', 'POST'])
 def addclusterconfig():
