@@ -105,6 +105,7 @@
         </div>
     </footer>
     <!--Modal dialogs-->
+    <div id="modal"></div>
 
     {% include "frm-addconfig.html" %}
     {% include "frm-newconfig.html" %}
@@ -132,8 +133,8 @@
             var clurl = 'clusterlayout/' + $("#cluster-select").val();
             $("#clusterlayout").load(clurl);
 
-        }
-        ;
+        };
+
 
         $(document).ready(function () {
             loadClusterInfo()
@@ -144,6 +145,11 @@
             $("#cluster-detail").click(function (event) {
                 loadDiscoveryInfo();
                 $('#raw-cluster-configModal').modal(options);
+            });
+            $('#editclusteconfig').click(function (){
+                // load html here
+                var clurl = 'ld/clusterconfig/edit' + $("#cluster-select").val();
+                $("#modal").load(clurl);
             });
             $('#frm-addcluster-submit-btn').click(function () {
                 $.ajax({

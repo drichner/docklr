@@ -20,7 +20,7 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 import os
 from flask import Blueprint, render_template, request
 from models import Config
-from forms import AddConfig, NewConfig
+from forms import AddConfig, NewConfig,ConfigForm
 from appinit import db
 from urlparse import urlparse
 from common.DiscoveryClient import DiscoveryClient
@@ -156,3 +156,17 @@ def removenode(ident):
     client = DiscoveryClient(host="discovery.etcd.io", port=443, protocol='https')
     client.delete("/" + ident)
     return json.dumps({'status': 'OK'});
+
+
+# CRUD Test
+@home_page.route('frm/config', methods=['GET', 'POST'])
+@home_page.route('frm/config/<id>', methods=['GET', 'PUT'])
+def config(id=None):
+    print id
+    form = ConfigForm()
+    if request.method == 'GET' and id == None:
+        # just get the new form for adding
+        action='frm//config'
+        method='POST'
+        template_name='frm-config.html'
+        return render_template(template_name, form=form, action=action,method=method)
