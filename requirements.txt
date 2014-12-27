@@ -9,11 +9,17 @@ WTForms==2.0.1
 Werkzeug==0.9.6
 cffi==0.8.6
 cryptography==0.7
+ecdsa==0.11
 enum34==1.0.4
+gevent==1.0.1
+gevent-websocket==0.9.3
+greenlet==0.4.5
 itsdangerous==0.24
+paramiko==1.15.2
 pyOpenSSL==0.14
 pyasn1==0.1.7
 pycparser==2.10
+pycrypto==2.6.1
 python-etcd==0.3.2
 requests==2.5.0
 six==1.8.0
