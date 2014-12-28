@@ -64,6 +64,7 @@
                     </div>
                     <div class="form-group">
                         <a href="#" id="addconfig" class="btn btn-xs btn-primary">Add Cluster Config</a>
+                        <a href="#" id="editconfig" class="btn btn-xs btn-primary">Edit Cluster Config</a>
                         <a href="#" class="btn btn-xs btn-primary"
                            data-toggle="modal"
                            data-target="#NewDiscoveryModal">Create new Discovery Record</a>
@@ -151,9 +152,20 @@
                     dataType: 'json',
                     data: $('#clusterinfo').serialize(),
                     success: function (data) {
-                        $('#cluster-select').append($('<option/>').attr("value", data.cluster.id).text(data.cluster.cluster_name))
+                        // see if the option exists by id
+                        var found = false
+                        $('#cluster-select option').each(function () {
+                            if ($(this).attr('value') == data.cluster.id) {
+                                $(this).text(data.cluster.cluster_name)
+                                found = true
+                                return false
+                            }
+                        });
+                        if (!found) {
+                            $('#cluster-select').append($('<option/>').attr("value", data.cluster.id).text(data.cluster.cluster_name))
+                        }
                         $('#ConfigModal').modal('toggle');
-                        $('#modal').html("")
+                        $('#modal').empty()
                     }
                 })
             })
@@ -164,10 +176,12 @@
                     $('#ConfigModal').modal();
                 });
             });
-            $('#editclusteconfig').click(function () {
+            $('#editconfig').click(function () {
                 // load html here
-                var clurl = 'ld/clusterconfig/edit' + $("#cluster-select").val();
-                $("#modal").load(clurl);
+                var clurl = '/frm/config/' + $("#cluster-select").val();
+                $("#modal").load(clurl, function () {
+                    $('#ConfigModal').modal();
+                });
             });
             $('#frm-addcluster-submit-btn').click(function () {
                 $.ajax({
