@@ -58,10 +58,7 @@ class FlaskrTestCase(unittest.TestCase):
 
 
 
-    def test_get_config(self):
-        testconfig = self.getConfigRecord()
-        rv = self.app.get('/clusterinfo/%s' % testconfig.id)
-
+   
 
 
 # helper methods
