@@ -1,7 +1,5 @@
-{% extends "bootstrap/base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
-{% block content %}
-<div class="modal fade" id="ConfigModal" tabindex="-1" role="dialog" aria-labelledby="AddConfigModal"
+<div class="modal fade" id="ConfigModal" tabindex="-1" role="dialog" aria-labelledby="ConfigModal"
      aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -20,15 +18,4 @@
         </div>
     </div>
 </div>
-{% endblock %}
-{% block scripts %}
-    {{ super() }}
-    <script>
-    $(document).ready(function () {
-        $('#ConfigModal').modal()
-        $('#frm-submit-btn').click(function (){
-            $('#clusterinfo').submit()
-        })
-    });
-    </script>
-{%  endblock %}
+
