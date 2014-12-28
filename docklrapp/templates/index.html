@@ -227,6 +227,14 @@
                     alert("Remove was performed.");
                 });
             })
+            // Terminal stuff
+            $(document).on('click', ".openterm", function (event) {
+                var host = $(this).attr('host')
+                var clurl = '/term/frm/'+host+'/'+$("#cluster-select").val();
+                $("#modal").load(clurl, function () {
+                    $('#TermModal').modal();
+                });
+            })
         });
 
     </script>

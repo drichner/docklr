@@ -19,9 +19,11 @@ with this program; if not, write to the Free Software Foundation, Inc.,
 """
 from docklrapp.views import home_page
 from etcdapp.views import etcd_page
+from docklrterm.views import term_page
 from appinit import app
 
 # Resister the app modules
 
 app.register_blueprint(home_page,url_prefix='/')
 app.register_blueprint(etcd_page,url_prefix='/etcd')
+app.register_blueprint(term_page,url_prefix='/term')

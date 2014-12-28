@@ -12,7 +12,7 @@
 
                         <p>...</p>
 
-                        <p><a href="#" class="btn btn-primary btn-xs" role="button">Button</a> {% if host.status == "down" %}<a href="#cluster" node="{{ host.durl }}"
+                        <p>{% if host.status == "up" or host.status == "master"%}<a href="#" class="btn btn-primary btn-xs openterm" role="button" host="{{ host['name'] }}">Terminal</a>{% endif %} {% if host.status == "down" %}<a href="#cluster" node="{{ host.durl }}"
                                                                                            class="btn btn-default btn-xs btn-danger dr-remove-node"
                                                                                            role="button">Remove from cluster</a> {% endif %}
                         </p>
