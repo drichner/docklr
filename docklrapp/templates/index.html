@@ -138,12 +138,12 @@
 
         function openTerminal(options) {
                 var client = new WSSHClient();
-                var term = new Terminal(80, 24, function(key) {
+                var term = new Terminal(150, 24, function(key) {
                     client.send(key);
                 });
                 term.open();
                 $('.terminal').detach().appendTo('#term');
-                term.resize(80, 24);
+                term.resize(150, 24);
                 term.write('Connecting...');
                 client.connect($.extend(options, {
                     onError: function(error) {
