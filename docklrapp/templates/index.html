@@ -111,6 +111,10 @@
 
 {% block scripts %}
     {{ super() }}
+    <script type="application/javascript" src="{{url_for('static', filename='term.js')}}">
+    </script>
+    <script type="application/javascript" src="{{url_for('static', filename='wssh.js')}}">
+    </script>
     <script>
         var options = {
             "backdrop": "false"
@@ -130,8 +134,33 @@
             var clurl = 'clusterlayout/' + $("#cluster-select").val();
             $("#clusterlayout").load(clurl);
 
-        }
-        ;
+        };
+
+        function openTerminal(options) {
+                var client = new WSSHClient();
+                var term = new Terminal(80, 24, function(key) {
+                    client.send(key);
+                });
+                term.open();
+                $('.terminal').detach().appendTo('#term');
+                term.resize(80, 24);
+                term.write('Connecting...');
+                client.connect($.extend(options, {
+                    onError: function(error) {
+                        term.write('Error: ' + error + '\r\n');
+                    },
+                    onConnect: function() {
+                        // Erase our connecting message
+                        term.write('\r');
+                    },
+                    onClose: function() {
+                        term.write('Connection Reset By Peer');
+                    },
+                    onData: function(data) {
+                        term.write(data);
+                    }
+                }));
+            }
 
 
         $(document).ready(function () {
@@ -232,6 +261,12 @@
                 var host = $(this).attr('host')
                 var clurl = '/term/frm/'+host+'/'+$("#cluster-select").val();
                 $("#modal").load(clurl, function () {
+                    options = {
+                        hostname:host,
+                        id: $("#cluster-select").val(),
+                        authentication_method: 'private_key'
+                    }
+                    openTerminal(options);
                     $('#TermModal').modal();
                 });
             })

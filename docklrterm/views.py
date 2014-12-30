@@ -58,7 +58,7 @@ def connect(hostname,id):
             hostname, e.message))
         request.environ['wsgi.websocket'].close()
         return str()
-        bridge.shell()
+    bridge.shell()
 
     # We have to manually close the websocket and return an empty response,
     # otherwise flask will complain about not returning a response and will

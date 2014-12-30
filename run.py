@@ -42,5 +42,16 @@ with app.test_request_context():
     list_routes()
 
 if __name__ == '__main__':
-    app.run()
+    from gevent.pywsgi import WSGIServer
+    from geventwebsocket.handler import WebSocketHandler
+
+    app.debug = True
+    http_server = WSGIServer(('localhost', 5000), app,
+        log=None,
+        handler_class=WebSocketHandler)
+    print 'Server running on ws://localhost:5000/remote'
+    try:
+        http_server.serve_forever()
+    except KeyboardInterrupt:
+        pass
 
