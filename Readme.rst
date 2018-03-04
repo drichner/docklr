@@ -3,7 +3,7 @@ Docklr
 .. image:: https://travis-ci.org/drichner/docklr.svg?branch=master
     :target: https://travis-ci.org/drichner/docklr
 
-.. image:: https://pypip.in/license/Docklr/badge.png
+.. image:: https://img.shields.io/pypi/l/Docklr.svg
     :target: https://pypi.python.org/pypi/Docklr/
     :alt: License
 
