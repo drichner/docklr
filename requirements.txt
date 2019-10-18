@@ -9,7 +9,7 @@ WTForms==2.0.1
 Werkzeug==0.9.6
 cffi==0.8.6
 cryptography==0.7
-ecdsa==0.11
+ecdsa==0.13.3
 enum34==1.0.4
 gevent==1.0.1
 gevent-websocket==0.9.3
