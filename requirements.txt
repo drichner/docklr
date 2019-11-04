@@ -16,7 +16,7 @@ gevent-websocket==0.9.3
 greenlet==0.4.5
 itsdangerous==0.24
 paramiko==1.15.2
-pyOpenSSL==0.14
+pyOpenSSL==17.5.0
 pyasn1==0.1.7
 pycparser==2.10
 pycrypto==2.6.1
