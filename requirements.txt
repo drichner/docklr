@@ -8,7 +8,7 @@ SQLAlchemy==0.9.8
 WTForms==2.0.1
 Werkzeug==0.9.6
 cffi==0.8.6
-cryptography==0.7
+cryptography==3.2
 ecdsa==0.11
 enum34==1.0.4
 gevent==1.0.1
