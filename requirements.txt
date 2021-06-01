@@ -23,6 +23,6 @@ pycrypto==2.6.1
 python-etcd==0.3.2
 requests==2.5.0
 six==1.8.0
-urllib3==1.10
+urllib3==1.26.5
 wsgiref==0.1.2
 wssh==0.1.0
